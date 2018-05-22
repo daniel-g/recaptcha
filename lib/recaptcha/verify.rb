@@ -51,7 +51,8 @@ module Recaptcha
               http_instance.use_ssl =
               http_instance.verify_mode = OpenSSL::SSL::VERIFY_NONE
             end
-            request = Net::HTTP::Get.new(uri.request_uri)
+            header = {'Content-Type' => 'application/x-www-form-urlencoded', 'Content-Length' => '0'}
+            request = Net::HTTP::Post.new(uri.request_uri, header)
             recaptcha = http_instance.request(request)
           end
           answer, error = JSON.parse(recaptcha.body).values
